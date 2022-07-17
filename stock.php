@@ -57,50 +57,53 @@ require 'cek_login.php';
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Data Pesanan</h1>
+                        <h1 class="mt-4">Data Stock Barang</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Selamat Datang</li>
                         </ol>
                         <div class="col-xl-3 col-md-6">
                         <div class="card bg-primary text-white mb-4">
-                            <div class="card-body">Jumlah Pesanan :</div>
+                            <div class="card-body">Jumlah Barang :</div>
                         </div>
                         <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
                             data-bs-target="#myModal">
-                            Tambah Pesanan
+                            Tambah Barang
                         </button>
                     </div>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                Data Order
+                                Data Barang
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>ID Pesanan</th>
-                                            <th>Tanggal Pesan</th>
-                                            <th>Nama Pelanggan</th>
-                                            <th>Jumlah</th>
+                                            <th>No</th>
+                                            <th>Nama Produk</th>
+                                            <th>Deskripsi</th>
+                                            <th>Harga</th>
+                                            <th>Stock</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>ID Pesanan</th>
-                                            <th>Tanggal Pesan</th>
-                                            <th>Nama Pelanggan</th>
-                                            <th>Jumlah</th>
+                                            <th>No</th>
+                                            <th>Nama Produk</th>
+                                            <th>Deskripsi</th>
+                                            <th>Harga</th>
+                                            <th>Stock</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
+                                            <td>1</td>
+                                            <td>Pensil</td>
+                                            <td>Pensil 3B</td>
+                                            <td>2500</td>
+                                            <td>10</td>
                                             <td>Edit | Delete</td>
                                         </tr>
                                     </tbody>
