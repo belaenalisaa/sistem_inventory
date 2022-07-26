@@ -131,24 +131,26 @@ require 'cek_login.php';
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
     </body>
-    <div class="modal" id="myModal">
+    <!-- Modal Tambah -->
+<div class="modal" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Data pelanggan</h4>
+                <h4 class="modal-title">Data Tambah Pelanggan</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <form method="POST">
                 <!-- Modal body -->
                 <div class="modal-body">
-                    Pilih Pelanggan
+                    <input type="text" name="nama_pelanggan" class="form-control mt-3" placeholder="nama pelanggan">
+                    <input type="text" name="notelp" class="form-control mt-3" placeholder="nomor telp">
+                    <input type="text" name="alamat" class="form-control mt-3" placeholder="alamat">
                 </div>
-
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" name="tambahpesanan">Simpan</button>
+                    <button type="submit" class="btn btn-success" name="tambahpelanggan">Simpan</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </form>

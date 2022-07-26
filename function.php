@@ -31,3 +31,26 @@ if (isset($_POST['login'])) {
         </script>';
     }
 }
+
+if (isset($_POST['tambahpelanggan'])) {
+    // initial variable
+    $nama_pelanggan = $_POST['nama_pelanggan'];
+    $no_telp = $_POST['no_telp'];
+    $alamat = $_POST['alamat'];
+
+    $tambahpelanggan = mysqli_query(
+        $koneksi,
+        "INSERT INTO pelanggan (nama_pelanggan, no_telp, alamat) 
+   VALUES ('$nama_pelanggan','$no_telp','$alamat')"
+    );
+
+    if ($tambahpelanggan) {
+        // kalau sukses
+        header('location:pelanggan.php');
+    } else {
+        echo '<script>
+    alert("Gagal Tambag Pelanggan")
+    window.location.href="pelanggan.php"
+    </script>';
+    }
+}
