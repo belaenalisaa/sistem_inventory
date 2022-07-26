@@ -35,13 +35,13 @@ if (isset($_POST['login'])) {
 if (isset($_POST['tambahpelanggan'])) {
     // initial variable
     $nama_pelanggan = $_POST['nama_pelanggan'];
-    $no_telp = $_POST['no_telp'];
+    $notelp = $_POST['notelp'];
     $alamat = $_POST['alamat'];
 
     $tambahpelanggan = mysqli_query(
         $koneksi,
-        "INSERT INTO pelanggan (nama_pelanggan, no_telp, alamat) 
-   VALUES ('$nama_pelanggan','$no_telp','$alamat')"
+        "INSERT INTO pelanggan (nama_pelanggan, notelp, alamat) 
+   VALUES ('$nama_pelanggan','$notelp','$alamat')"
     );
 
     if ($tambahpelanggan) {
