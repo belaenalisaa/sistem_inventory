@@ -1,5 +1,8 @@
 <?php
 require 'cek_login.php';
+$h1 = mysqli_query($koneksi, "SELECT * FROM pelanggan");
+$h2 = mysqli_num_rows($h1);
+
 ?>
 
 <!DOCTYPE html>
