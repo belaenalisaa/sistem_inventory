@@ -116,7 +116,7 @@ if (isset($_GET['idp'])) {
 
                                     while ($ap = mysqli_fetch_array($getview)) {
                                         $idpr = $ap['id_produk'];
-                                        $iddetail = $ap['id_detailpesanan'];
+                                        $iddetail = $ap['id_detail_pesanan'];
                                         $idp = $ap['id_pesanan'];
                                         $qty = $ap['qty'];
                                         $harga = $ap['harga'];
