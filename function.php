@@ -162,14 +162,17 @@ if (isset($_POST['hapusproduk'])) {
 if (isset($_POST['barangmasuk'])) {
     //deskripsi initial variable
     $id_produk = $_POST['id_produk'];
-    $quantity = $_POST['quantity'];
+    $qty = $_POST['qty'];
 
     $barangmasuk = mysqli_query(
         $koneksi,
-        "INSERT INTO masuk (id_produk, quantity) VALUES ('$id_produk','$quantity')"
+        "INSERT INTO masuk (id_produk, qty) VALUES ('$id_produk','$qty')"
     );
 
-    if ($barangmasuk) {
+    $updateStock = mysqli_query($koneksi, "UPDATE produk SET stock = stock + $qty
+    WHERE id_produk='$id_produk'");
+
+    if ($barangmasuk && $updateStock) {
         // kalau sukses
         header('location:masuk.php');
     } else {
@@ -239,4 +242,181 @@ if (isset($_POST['addproduk'])) {
             alert("Stock tidak cukup")
             window.location.href="view.php' . $idp . '"
             </script>';
+}
+//edit produk pesanan
+if (isset($_POST['hapusprodukpesanan'])) {
+    $iddetail = $_POST['iddetail']; // detail pesanan
+    $idpr = $_POST['idpr'];
+    $idp = $_POST['idp'];
+
+    //cek qty sekarang
+    $cek1 = mysqli_query($koneksi, "SELECT * FROM detail_pesanan WHERE id_detailpesanan='$iddetail'");
+    $cek2 = mysqli_fetch_array($cek1);
+    $qtysekarang = $cek2['qty'];
+    
+    //stock barang saat ini
+    $cek3 = mysqli_query($koneksi, "SELECT * FROM produk WHERE id_produk='$idpr'");
+    $cek4 = mysqli_fetch_array($cek3);
+    $stocksekarang = $cek4['stock'];
+
+    $hitung = $stocksekarang + $qtysekarang;
+
+    $update = mysqli_query($koneksi, "UPDATE produk SET stock='$hitung' WHERE id_produk='$idpr'"); //update stock
+    $hapus = mysqli_query($koneksi, "DELETE from detail_pesanan WHERE id_produk='$idpr' AND id_detailpesanan='$iddetail'");
+
+if ($update && $hapus) {
+        header('location:view.php?idp=' . $idp);
+    } else {
+        echo '
+        <script>
+        alert("Stock tidak cukup")
+        window.location.href="view.php' . $idp . '"
+        </script>';
+    }
+}
+
+//if(isset($_POST['editbarangmasuk'])){
+//    $qty = $_POST['qty'];
+//    $id_masuk = $_POST['id_masuk'];
+//    $id_produk =$_POST['id_produk'];
+//
+//    $caritau = mysqli_query($koneksi, "SELECT * FROM produk WHERE id_masuk='$id_masuk'");
+//    $caritau2 = mysqli_fetch_array($caritau);
+//    $qty_sekarang = $carita2['qty'];
+
+//    $cekstock = mysqli_query($koneksi, "SELECT * FROM produk WHERE id_produk='$id_produk'");
+//    $cekstock2 = mysqli_fetch_array($cekstock);
+//    $stocksekarang = $cekstock2['stock'];
+
+//    if ($quantity >= $qty_sekarang){
+//        $selisih = $quantity - $qty_sekarang;
+//        $newstock = $stocksekarang + $selisih;
+//    }
+    
+//    $queryedit = mysqli_query($koneksi,"UPDATE SET qty='$qty' WHERE id_masuk='$id_masuk'");
+//    $queryedit2 = mysqli_query($koneksi,"UPDATE SET stock='$hitung' WHERE id_produk='$id_produk'");
+
+//    if($queryedit && $queryedit2){
+        //update stock
+//        header('location:masuk.php');
+//    } else {
+//        echo '
+//        <script>
+//        alert("Edit Barang Masuk Gagal)
+//        window.location.href="masuk.php"
+//        </script>';
+//    }
+//}
+
+if(isset($_POST['editbarangmasuk'])) {
+    $qty = $_POST['qty'];
+    $id_masuk = $_POST['id_masuk'];
+    $id_produk = $_POST['id_produk'];
+
+    //cek
+    $getHistorys = mysqli_query($koneksi, "SELECT * FROM masuk WHERE id_masuk='$id_masuk'");
+    $getStok = mysqli_query($koneksi, "SELECT stock from produk where id_produk = '$id_produk'");
+    $getStok2 = mysqli_fetch_array($getStok);
+
+    $getHistory = mysqli_fetch_array($getHistorys);
+    $historyLama = $getHistory['qty'];
+    $stokSekarang = $getStok2['stock'];
+
+    if ($qty >= $historyLama) {
+        $selisih = $qty - $historyLama;
+        $update = mysqli_query($koneksi, "update produk set stock = stock+ $selisih where id_produk='$id_produk'");
+    } else {
+        $selisih = $historyLama - $qty;
+        $update = mysqli_query($koneksi, "update produk set stock = stock-$selisih where id_produk='$id_produk'");
+    }
+
+    $query2 = mysqli_query($koneksi, "UPDATE masuk SET qty='$qty' WHERE id_masuk='$id_masuk'");
+
+    if ($query2) {
+        //jika sukses
+        header('location:masuk.php');
+    } else {
+        echo '
+        <script>alert("Gagal");
+         window.location.href="masuk.php"
+        </script>
+        ';
+    }
+}
+
+if(isset($_POST['hapusbarangmasuk'])){
+    $id_masuk = $_POST['id_masuk'];
+    $id_produk = $_POST['id_produk'];
+
+    $getHistorys = mysqli_query($koneksi, "SELECT * FROM masuk WHERE id_masuk='$id_masuk'");
+    $getHistory = mysqli_fetch_array($getHistorys);
+    $historyLama = $getHistory['qty'];
+
+    $update = mysqli_query($koneksi,"UPDATE produk SET stock = stock - $historyLama WHERE id_produk='$id_produk'");
+     $query = mysqli_query($koneksi, "DELETE FROM masuk WHERE id_masuk='$id_masuk'");
+
+    if($query && $update){
+        //update stock
+        header('location:masuk.php');
+    } else {
+        echo '
+        <script>
+        alert("Hapus Barang Masuk Gagal")
+        window.location.href="masuk.php"
+        </script>';
+    }
+}
+
+if(isset($_POST['hapuspesanan'])){
+    $id_pesanan = $_POST['id_pesanan'];
+    $id_pelanggan = $_POST['id_pelanggan'];
+
+    $query = mysqli_query($koneksi, "DELETE FROM pesanan WHERE id_pesanan='$id_pesanan'");
+
+    if($query){
+        //update stock
+        header('location:index.php');
+    } else {
+        echo '
+        <script>
+        alert("Hapus Barang Masuk Gagal")
+        window.location.href="index.php"
+        </script>';
+    }
+}
+
+if(isset($_POST['editbarangmasuk'])) {
+    $qty = $_POST['qty'];
+    $id_masuk = $_POST['id_masuk'];
+    $id_produk = $_POST['id_produk'];
+
+    //cek
+    $getHistorys = mysqli_query($koneksi, "SELECT * FROM masuk WHERE id_masuk='$id_masuk'");
+    $getStok = mysqli_query($koneksi, "SELECT stock from produk where id_produk = '$id_produk'");
+    $getStok2 = mysqli_fetch_array($getStok);
+
+    $getHistory = mysqli_fetch_array($getHistorys);
+    $historyLama = $getHistory['qty'];
+    $stokSekarang = $getStok2['stock'];
+
+    if ($qty >= $historyLama) {
+        $selisih = $qty - $historyLama;
+        $update = mysqli_query($koneksi, "update produk set stock = stock+ $selisih where id_produk='$id_produk'");
+    } else {
+        $selisih = $historyLama - $qty;
+        $update = mysqli_query($koneksi, "update produk set stock = stock-$selisih where id_produk='$id_produk'");
+    }
+
+    $query2 = mysqli_query($koneksi, "UPDATE masuk SET qty='$qty' WHERE id_masuk='$id_masuk'");
+
+    if ($query2) {
+        //jika sukses
+        header('location:masuk.php');
+    } else {
+        echo '
+        <script>alert("Gagal");
+         window.location.href="masuk.php"
+        </script>
+        ';
+    }
 }

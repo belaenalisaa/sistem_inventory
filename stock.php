@@ -3,7 +3,6 @@ require 'cek_login.php';
 $h1 = mysqli_query($koneksi, "SELECT * FROM produk");
 $h2 = mysqli_num_rows($h1);
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +74,7 @@ $h2 = mysqli_num_rows($h1);
                     <div class="row">
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Jumlah Barang : <?= $h2;  ?> </div>
+                                <div class="card-body">Jumlah Barang :<?=$h2;?> </div>
                             </div>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#myModal">
@@ -155,7 +154,7 @@ $h2 = mysqli_num_rows($h1);
                                                         <input type="num" name="harga" class="form-control mt-3"
                                                             placeholder="harga" value="<?= $harga;  ?>">
                                                         <input type="num" name="stock" class="form-control mt-3"
-                                                            placeholder="harga" value="<?= $stock;  ?>">
+                                                            placeholder="stock" value="<?= $stock;  ?>">
                                                         <input type="hidden" name="id_produk" class="form-control mt-3"
                                                             value="<?= $id_produk;  ?>">
                                                     </div>
@@ -216,7 +215,7 @@ $h2 = mysqli_num_rows($h1);
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Belaena</div>
+                        <div class="text-muted">Copyright &copy; Eka Yuniar 2022</div>
                     </div>
                 </div>
             </footer>

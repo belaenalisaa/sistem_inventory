@@ -76,36 +76,115 @@ require 'cek_login.php';
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama produk</th>
-                                        <th>Deskripsi</th>
+                                        <th>Nama produk - deskripsi</th>
                                         <th>Jumlah</th>
                                         <th>Tanggal</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    $getbarangmasuk = mysqli_query($koneksi, "SELECT * FROM masuk m,produk p WHERE m.id_produk=p.id_produk");
-                                    $i = 1;
+                                <?php
+                               $getbarangmasuk = mysqli_query($koneksi, "SELECT * FROM masuk m,produk p WHERE m.id_produk=p.id_produk");
+                               $i = 1;
 
-                                    while ($bm = mysqli_fetch_array($getbarangmasuk)) {
-                                        $id_produk = $bm['id_produk'];
-                                        $nama_produk = $bm['nama_produk'];
-                                        $deskripsi = $bm['deskripsi'];
-                                        $quantity = $bm['quantity'];
-                                        $tgl_masuk = $bm['tgl_masuk'];
-                                    ?>
+                               while ($bm = mysqli_fetch_array($getbarangmasuk)) {
+                                   $id_produk = $bm['id_produk'];
+                                   $id_masuk = $bm['id_masuk'];
+                                   $nama_produk = $bm['nama_produk'];
+                                   $deskripsi = $bm['deskripsi'];
+                                    $quantity=$bm['qty'];
+                                    $tgl_masuk=$bm['tgl_masuk'];
+                                ?>
+                                
                                     <tr>
-                                        <td><?= $i++;  ?></td>
-                                        <td><?= $nama_produk;  ?></td>
-                                        <td><?= $deskripsi;  ?></td>
-                                        <td><?= $quantity;  ?></td>
-                                        <td><?= $tgl_masuk;  ?></td>
-
+                                        <td><?= $i++; ?></td>
+                                        <td><?= $nama_produk;?> - <?= $deskripsi;?> </td>
+                                        <td><?= $quantity; ?></td>
+                                        <td><?= $tgl_masuk; ?></td>
+                                        <td><button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                                data-bs-target="#edit<?= $id_masuk; ?>">
+                                                Edit
+                                            </button>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#delete<?= $id_masuk; ?>">
+                                                Delete
+                                            </button>
+                                        </td>
                                     </tr>
+                                    <div class="modal" id="edit<?= $id_masuk; ?>">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Edit Barang <?= $nama_produk;  ?></h4>
+                                                    <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <form method="POST">
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body">
+                                                        <input type="text" name="nama_produk" class="form-control mt-3"
+                                                            placeholder="nama produk" value="<?= $nama_produk; ?> - <?= $deskripsi; ?>"
+                                                            disabled>
+                                                    
+                                                        <input type="num" name="qty" class="form-control mt-3"
+                                                            placeholder="Quantity" value="<?= $quantity;  ?>">
+
+                                                        <input type="hidden" name="id_produk" class="form-control mt-3"
+                                                            value="<?= $id_produk;  ?>"
+                                                            hidden>
+                                                        <input type="hidden" name="id_masuk" class="form-control mt-3"
+                                                            value="<?= $id_masuk;  ?>" >
+                                                    </div>
+
+                                                    <!-- Modal footer -->
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-success"
+                                                            name="editbarangmasuk">Simpan</button>
+                                                        <button type="button" class="btn btn-danger"
+                                                            data-bs-dismiss="modal">Tutup</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal" id="delete<?= $id_masuk; ?>">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Delete Barang <?= $nama_produk;  ?></h4>
+                                                    <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <form method="POST">
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body">
+                                                        Apakah Anda Yakin akan menghapus barang ini?
+                                                        <input type="hidden" name="id_masuk" class="form-control mt-3"
+                                                            value="<?= $id_masuk;  ?>">
+                                                            <input type="hidden" name="id_produk" class="form-control mt-3"
+                                                            value="<?= $id_produk;  ?>">
+                                                       
+                                                    </div>
+
+                                                    <!-- Modal footer -->
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-success"
+                                                            name="hapusbarangmasuk">Hapus</button>
+                                                        <button type="button" class="btn btn-danger"
+                                                            data-bs-dismiss="modal">Tutup</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <?php
-                                    };
-                                    ?>
+                                } ?>
                                 </tbody>
+                                
                             </table>
                         </div>
                     </div>
@@ -114,7 +193,7 @@ require 'cek_login.php';
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Belaena</div>
+                        <div class="text-muted">Copyright &copy; Your Website 2022</div>
                         <div>
                             <a href="#">Privacy Policy</a>
                             &middot;
@@ -163,9 +242,7 @@ require 'cek_login.php';
                         <?php
                         };
                         ?>
-                        <input type="number" name="quantity" class="form-control mt-3" placeholder="quantity" min="1"
-                            required>
-
+ <input type="number" name="qty" class="form-control mt-3" placeholder="Quantity" min ="1" required">
                     </select>
                 </div>
 

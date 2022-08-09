@@ -207,7 +207,7 @@ $h2 = mysqli_num_rows($h1);
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Belaena</div>
+                        <div class="text-muted">Copyright &copy; Eka Yuniar 2022</div>
                     </div>
                 </div>
             </footer>
@@ -235,7 +235,7 @@ $h2 = mysqli_num_rows($h1);
                 <!-- Modal body -->
                 <div class="modal-body">
                     <input type="text" name="nama_pelanggan" class="form-control mt-3" placeholder="nama pelanggan">
-                    <input type="text" name="no_telp" class="form-control mt-3" placeholder="no telp">
+                    <input type="text" name="notelp" class="form-control mt-3" placeholder="notelp">
                     <input type="text" name="alamat" class="form-control mt-3" placeholder="alamat">
                 </div>
 

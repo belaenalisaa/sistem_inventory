@@ -24,7 +24,6 @@ require 'cek_login.php';
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
-
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -52,7 +51,6 @@ require 'cek_login.php';
                             <div class="sb-nav-link-icon"><i class="fa fa-sign-out"></i></div>
                             Logout
                         </a>
-
                     </div>
                 </div>
             </nav>
@@ -62,7 +60,6 @@ require 'cek_login.php';
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Data Order</h1>
                     <ol class="breadcrumb mb-4">
-
                         <li class="breadcrumb-item active">Selamat Datang</li>
                     </ol>
                     <div class="col-xl-3 col-md-6">
@@ -86,10 +83,19 @@ require 'cek_login.php';
                                         <th>ID Pesanan</th>
                                         <th>Tanggal Pesan</th>
                                         <th>Nama Pelanggan</th>
-                                        <th>Jumlah</th>
+                                        <th>Alamat</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>ID Pesanan</th>
+                                        <th>Tanggal Pesan</th>
+                                        <th>Nama Pelanggan</th>
+                                        <th>Alamat</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </tfoot>
                                 <tbody>
                                     <?php
                                     $getpesanan = mysqli_query($koneksi, "SELECT * FROM pesanan ps, pelanggan pl WHERE ps.id_pelanggan=pl.id_pelanggan");
@@ -99,26 +105,53 @@ require 'cek_login.php';
                                         $nama_pelanggan = $ps['nama_pelanggan'];
                                         $alamat = $ps['alamat'];
                                         $tgl_pesan = $ps['tgl_pesan'];
-
                                     ?>
                                     <tr>
-                                        <td><?= $id_pesanan;  ?></td>
-                                        <td><?= $tgl_pesan;  ?></td>
-                                        <td><?= $nama_pelanggan;  ?> - <?= $alamat;  ?></td>
-                                        <td>Jumlah</td>
-                                        <td>
-                                            <a href="view.php?idp=<?= $id_pesanan; ?>" class="btn btn-primary"
-                                                target="blank">
-                                                Tampilkan
-                                            </a>
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                                data-bs-target="#delete<?= $id_pesanan; ?>">
-                                                Delete
-                                            </button>
-                                        </td>
+                                        <td><?= $id_pesanan; ?></td>
+                                        <td><?= $tgl_pesan; ?></td>
+                                        <td><?= $nama_pelanggan; ?></td>
+                                        <td><?= $alamat; ?></td>
+                                        <td> 
+                                       <a href="view.php?idp=<?= $id_pesanan; ?>" class="btn btn-primary" data-bs-target="blank">
+                                       Tampilkan  </a>| 
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                            data-bs-target="#edit<?= $id_pelanggan?>">
+                                            Delete
+                                        </button></td>
                                     </tr>
+                                    <div class="modal" id="edit<?= $id_pesanan; ?>">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                     <!-- Modal Header -->
+                                     <div class="modal-header">
+                                                    <h4 class="modal-title">Delete Barang <?= $id_pesanan;  ?></h4>
+                                                    <button type="button" class="btn-close"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <form method="POST">
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body">
+                                                        Apakah Anda Yakin akan menghapus pesanan <? $nama_pelanggan ?> ini? 
+                                                        <input type="hidden" name="id_pesanan" class="form-control mt-3"
+                                                            value="<?= $id_pesanan;  ?>">
+                                                            <input type="hidden" name="id_pelanggan" class="form-control mt-3"
+                                                            value="<?= $id_pelanggan;  ?>">
+                                                       
+                                                    </div>
+
+                                                    <!-- Modal footer -->
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-success"
+                                                            name="hapuspesanank">Hapus</button>
+                                                        <button type="button" class="btn btn-danger"
+                                                            data-bs-dismiss="modal">Tutup</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <?php
-                                    }; ?>
+                                    } ?>
                                 </tbody>
                             </table>
                         </div>
@@ -128,7 +161,7 @@ require 'cek_login.php';
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Belaena</div>
+                        <div class="text-muted">Copyright &copy; Your Website 2022</div>
                         <div>
                             <a href="#">Privacy Policy</a>
                             &middot;
@@ -151,7 +184,6 @@ require 'cek_login.php';
 <div class="modal" id="myModal">
     <div class="modal-dialog">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Data Pesanan</h4>
@@ -161,21 +193,20 @@ require 'cek_login.php';
                 <!-- Modal body -->
                 <div class="modal-body">
                     Pilih Pelanggan
-                    <select name="id_pelanggan" class="form-control">
-                        <?php
-                        $getpelanggan = mysqli_query($koneksi, "SELECT * FROM pelanggan");
-                        while ($pl = mysqli_fetch_array($getpelanggan)) {
-                            $id_pelanggan = $pl['id_pelanggan'];
-                            $nama_pelanggan = $pl['nama_pelanggan'];
-                            $alamat = $pl['alamat'];
-                        ?>
-                        <option value="<?= $id_pelanggan; ?>">
-                            <?= $nama_pelanggan;  ?> - <?= $alamat;  ?>
-                        </option>
-
-                        <?php
-                        }; ?>
-                    </select>
+<select name="id_pelanggan" class="form-control">
+    <?php
+    $getpelanggan=mysqli_query($koneksi, "SELECT * FROM pelanggan");
+    while($pl=mysqli_fetch_array($getpelanggan)){
+        $id_pelanggan = $pl['id_pelanggan'];
+        $nama_pelanggan = $pl['nama_pelanggan'];
+        $alamat = $pl['alamat'];
+        ?>
+        <option value="<?= $id_pelanggan; ?>">
+        <?= $nama_pelanggan; ?>
+        - <?= $alamat; ?>
+            <?php 
+            } ?>
+            </select>
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">

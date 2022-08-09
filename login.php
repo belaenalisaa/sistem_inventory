@@ -37,7 +37,7 @@ require 'function.php'
                                         </div>
                                         <div class="form-floating mb-3">
                                             <input class="form-control" name="password" type="password"
-                                                placeholder="Password" />
+                                                placeholder="Password" required />
                                             <label for="inputPassword">Password</label>
                                         </div>
                                         <button type="submit" name="login" class="btn btn-primary">Login
@@ -55,7 +55,7 @@ require 'function.php'
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Belaena</div>
+                    <div class="text-muted">Copyright &copy; Your Website 2022</div>
                     <div>
                         <a href="#">Privacy Policy</a>
                         &middot;
