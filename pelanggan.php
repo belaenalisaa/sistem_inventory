@@ -207,7 +207,7 @@ $h2 = mysqli_num_rows($h1);
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Eka Yuniar 2022</div>
+                        <div class="text-muted">Copyright &copy; Belaenalisaa</div>
                     </div>
                 </div>
             </footer>
